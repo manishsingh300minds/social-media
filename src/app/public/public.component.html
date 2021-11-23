@@ -1,0 +1,29 @@
+<div class="listing-component mt-5">
+    <div class="container">
+      <div class="card">
+        <div class="card-body">
+          <section id="info-utile" class="bg-white py-5">
+            <div class="container">
+                <h3 class="text-center text-uppercase mb-5 lead-h-text main-title">Look at some amazing <span class="">posts!!</span></h3>
+                  <div class="accordion" id="accordionExample">
+                      <div class="accordion-item" *ngFor="let post of postData; let i = index">
+                          <h2 class="accordion-header  container-fluid" [id]="'heading'+i">
+                            <div id="wrapper" class="row">
+                                <div class="accordion-button " [ngClass]="{ 'collapsed': i != 0 }" type="button" data-bs-toggle="collapse"
+                                [attr.data-bs-target]="'#post'+i" aria-expanded="true" [attr.aria-controls]="'collapse'+i">
+                                    {{post.title}}
+                                </div>
+                            </div>
+                          </h2>
+                        <div [id]="'post'+i" class="accordion-collapse collapse" [ngClass]="{ 'show': i == 0 }" [attr.aria-labelledby]="'heading'+i" data-bs-parent="#accordionExample">
+                          <div class="accordion-body">{{post.description}}</div>
+                        </div>
+                      </div>
+                  </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+  
