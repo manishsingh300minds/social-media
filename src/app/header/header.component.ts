@@ -46,5 +46,6 @@ export class HeaderComponent implements OnInit {
 
   logout(){
     this.msalService.logout();
+    //logout msal
   }
 }
