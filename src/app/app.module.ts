@@ -1,23 +1,18 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { appRoutingModule } from './app-routing.module';
+import { HttpClientModule } from '@angular/common/http';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { appRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
+import { PublicComponent } from './public/public.component';
 
-import { PostsService } from './posts.service';
-import { HttpClientModule } from '@angular/common/http';
-
+import { PostsService } from './services/posts.service';
+import { MsalGuard } from './guard/msal.guard';
 import { MsalModule, MsalService, MSAL_INSTANCE } from '@azure/msal-angular';
 import { IPublicClientApplication, PublicClientApplication } from '@azure/msal-browser';
-import { RestrictedPageComponent } from './restricted-page/restricted-page.component';
-import { PublicComponent } from './public/public.component';
-import { AuthComponent } from './auth/auth.component';
-import { MsalGuard } from './msal.guard';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
-const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
 
 export function MSALInstanceFactory() : IPublicClientApplication {
   return new PublicClientApplication({
@@ -32,14 +27,12 @@ export function MSALInstanceFactory() : IPublicClientApplication {
   declarations: [
     AppComponent,
     HeaderComponent,
-    RestrictedPageComponent,
     PublicComponent,
-    AuthComponent,
   ],
   imports: [
     appRoutingModule,
     BrowserModule,
-    HttpClientModule, 
+    HttpClientModule,
     ReactiveFormsModule,
     MsalModule,
     FormsModule,
@@ -50,7 +43,6 @@ export function MSALInstanceFactory() : IPublicClientApplication {
     {
       provide: MSAL_INSTANCE,
       useFactory : MSALInstanceFactory,
-
     },
     MsalGuard,
     MsalService

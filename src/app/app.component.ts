@@ -7,7 +7,7 @@ import { MsalService } from '@azure/msal-angular';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'todolist';
+  title = 'Posting App';
 
   constructor(private msalService : MsalService){}
 
@@ -18,19 +18,9 @@ export class AppComponent implements OnInit {
           this.msalService.instance.setActiveAccount(res.account);
       }
     )
-    console.log("Status",this.isLoggedIn());
   }
 
   isLoggedIn() : boolean{
     return this.msalService.instance.getActiveAccount() != null;
   }
-
-
-  // login(){
-  //   this.msalService.loginRedirect();
-  // }
-
-  // logout(){
-  //   this.msalService.logout();
-  // }
 }

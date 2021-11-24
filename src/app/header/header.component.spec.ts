@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { HeaderComponent } from './header.component';
+import {MSAL_INSTANCE, MsalService} from "@azure/msal-angular";
+import {MSALInstanceFactory} from "../app.module";
+import {RouterTestingModule} from "@angular/router/testing";
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -8,7 +10,15 @@ describe('HeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ HeaderComponent ]
+      imports: [ RouterTestingModule],
+      declarations: [ HeaderComponent ],
+      providers: [
+        MsalService,
+        {
+          provide: MSAL_INSTANCE,
+          useFactory : MSALInstanceFactory,
+        },
+      ]
     })
     .compileComponents();
   });

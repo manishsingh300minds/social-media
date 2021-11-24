@@ -1,16 +1,30 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import {MSAL_INSTANCE, MsalModule, MsalService} from "@azure/msal-angular";
+import {PostsService} from "./services/posts.service";
+import {MsalGuard} from "./guard/msal.guard";
+import {MSALInstanceFactory} from "./app.module";
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule,
+          MsalModule
       ],
       declarations: [
         AppComponent
       ],
+      providers:[
+        PostsService,
+        {
+          provide: MSAL_INSTANCE,
+          useFactory : MSALInstanceFactory,
+        },
+        MsalGuard,
+        MsalService
+      ]
     }).compileComponents();
   });
 
@@ -20,16 +34,14 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'todolist'`, () => {
+  it(`should have as title 'Posting App'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('todolist');
+    expect(app.title).toEqual('Posting App');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('todolist app is running!');
   });
 });

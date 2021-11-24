@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { AdminComponent } from './admin.component';
-import { AdminModule } from './admin.module';
 import { CreateComponent } from './create/create.component';
 import { ListingComponent } from './listing/listing.component';
 

@@ -1,9 +1,9 @@
   <header [isAuth]="isLoggedIn()"></header>
-  <div class="main-body">
+  <div>
     <public *ngIf="!isLoggedIn() === true"></public>
     <router-outlet></router-outlet>
   </div>
 
 
-  
+
 

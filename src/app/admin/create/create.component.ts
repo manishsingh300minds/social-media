@@ -1,9 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { PostsService } from '../../posts.service';
+import { PostsService } from '../../services/posts.service';
 import {ActivatedRoute, Router} from "@angular/router";
-import {PostType} from "../listing/listing.component";
-
 import {Subject} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
 import {NgbAlert} from '@ng-bootstrap/ng-bootstrap';
@@ -76,7 +74,7 @@ export class CreateComponent implements OnInit {
         this.postForm.reset();
       },
         (error : any) => console.log("Server error:",error));
-    } 
+    }
     else{
       this.postService.updatePost(this.editPostId,newPost.title,newPost.description).subscribe((res) => {
         console.log("Update response from server",res);
@@ -89,6 +87,5 @@ export class CreateComponent implements OnInit {
       },
         (error : any) => console.log("Updating server error:",error));
     }
-
   }
 }

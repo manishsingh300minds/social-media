@@ -2,30 +2,24 @@
   .nav-content{
       background-color: #a4508b;
       background-image: linear-gradient(326deg, #5f0a87 0%, #a4508b 50%);
-
       a:hover{
         transform: scale(1.2);
         color : #000;
       }
-
       .fa-tasks{
         margin-right: 5px;
       }
-
       .nav-item{
         margin: 0px 5px;
       }
     }
-
     .container-fluid{
       padding: 0px 20px;
     }
-
     .profile{
       display: flex;
       align-items: center;
     }
-
     .username{
       margin-right: 20px;
       color: #fff;

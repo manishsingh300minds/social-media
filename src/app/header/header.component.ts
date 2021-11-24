@@ -11,8 +11,8 @@ import { AuthenticationResult } from '@azure/msal-common';
 export class HeaderComponent implements OnInit {
   @Input('isAuth') auth! : boolean;
   userName! : string | undefined;
-  previousid = 'list';
-  
+  previousId = 'list';
+
   constructor(public msalService : MsalService, public router: Router) { }
 
   ngOnInit(): void {
@@ -24,7 +24,7 @@ export class HeaderComponent implements OnInit {
   changePage(event : Event){
     const elementId: string = (event.target as Element).id;
     const element = document.getElementById(elementId);
-    const previousElement = document.getElementById(this.previousid);
+    const previousElement = document.getElementById(this.previousId);
 
     if(previousElement)
       previousElement.classList.remove('active');
@@ -32,9 +32,8 @@ export class HeaderComponent implements OnInit {
     if(element)
       element.classList.add('active');
 
-    this.previousid = elementId;
+    this.previousId = elementId;
   }
-
 
   login(){
     this.msalService.loginPopup().subscribe((res : AuthenticationResult) => {

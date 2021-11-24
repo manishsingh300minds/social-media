@@ -1,6 +1,7 @@
-import { Component, Input, OnInit} from '@angular/core';
-import { PostsService } from '../../posts.service';
-import {ActivatedRoute, Router, RouterModule} from "@angular/router";
+import { Component, OnInit} from '@angular/core';
+import { PostsService } from '../../services/posts.service';
+import {Router} from "@angular/router";
+import {PostType} from "../../models/post.model";
 
 @Component({
   selector: 'listing',
@@ -13,8 +14,7 @@ export class ListingComponent implements OnInit {
   expand = false;
   previousId = 0;
 
-  constructor(private postService: PostsService, public router : Router) {
-  }
+  constructor(private postService: PostsService, public router : Router) {}
 
   ngOnInit(): void {
     this.getPosts();
@@ -23,7 +23,6 @@ export class ListingComponent implements OnInit {
   getPosts(){
     this.postService.getPosts().subscribe((posts:any) => {
       this.postData = posts;
-      console.log("Post Data",this.postData)
     });
   }
 
@@ -37,8 +36,4 @@ export class ListingComponent implements OnInit {
     );
     this.postData = this.postData.filter(data => data !== post);
   }
-}
-export type PostType = {
-  title? : string,
-  description? : string
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { PostType } from '../admin/listing/listing.component';
-import { PostsService } from '../posts.service';
+import { PostsService } from '../services/posts.service';
+import {PostType} from "../models/post.model";
 
 @Component({
   selector: 'public',

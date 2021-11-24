@@ -2,20 +2,18 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError, map }  from 'rxjs/operators';
-import { PostType } from './admin/listing/listing.component';
+import { environment } from '../../environments/environment';
+import { PostType } from '../models/post.model';
 
 @Injectable({
   providedIn: 'root'
 })
-
 export class PostsService {
-
-  postUrl = "http://localhost:4000/listing";
-
+  api = environment.serverUrl;
   constructor(private http: HttpClient) {}
 
   getPosts() : Observable<PostType[]>{
-    return this.http.get<any[]>(this.postUrl).pipe(map((postData : any) => {
+    return this.http.get<any[]>(this.api).pipe(map((postData : any) => {
       return postData.map((post : any) => {
         return {
           title : post.title,
@@ -29,7 +27,7 @@ export class PostsService {
 
     addPost(data : any) : Observable<any> {
       console.log('in service',data);
-        return this.http.post<Task>(this.postUrl,data,{
+        return this.http.post<Task>(this.api,data,{
               headers : new HttpHeaders({
               'Content-Type' : 'application/json'
             })
@@ -42,20 +40,20 @@ export class PostsService {
         title : title,
         description : description
       }
-       return this.http.put(`${this.postUrl}/${id}` ,post).pipe(catchError(this.handleError));
+       return this.http.put(`${this.api}/${id}` ,post).pipe(catchError(this.handleError));
     }
 
     deletePost(id : string) : Observable<any>{
-      return this.http.delete<void>(`${this.postUrl}/${id}`).pipe(catchError(this.handleError));
+      return this.http.delete<void>(`${this.api}/${id}`).pipe(catchError(this.handleError));
     }
 
-  private handleError(errorResponse : HttpErrorResponse): Observable<any>{
-    if(errorResponse.error instanceof Error){
-        console.log("Client Side Error:", errorResponse.error.message);
+    private handleError(errorResponse : HttpErrorResponse): Observable<any>{
+      if(errorResponse.error instanceof Error){
+          console.log("Client Side Error:", errorResponse.error.message);
+      }
+      else {
+          console.log("Client Side Error:", errorResponse);
+      }
+      return errorResponse.error;
     }
-    else {
-        console.log("Client Side Error:", errorResponse);
-    }
-    return errorResponse.error;
-  }
 }

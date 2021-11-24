@@ -1,28 +1,22 @@
 .listing-component{
-
   .main-title{
     color: #a4508b;
     span{
       color: #5f0a87;
     }
   }
-
   .bg-white
   {
       background-color:#ffffff;
   }
-
   .bg-primary
   {
       background-color: #5f0a87!important;
   }
-
   .accordion-item {
       background-color: #fff;
       border: none;
-
   }
-
   .accordion-button {
       background-color: #f2F2F2;
       box-shadow: none;
@@ -43,12 +37,10 @@
       outline: 0;
       box-shadow: none;
   }
-
   .accordion-button:not(.collapsed)::after {
       background-image: url("https://nsm09.casimages.com/img/2021/06/17//21061710471725998217466601.png");
       transform: rotate(-180deg);
   }
-
   .accordion-button::after {
       flex-shrink: 0;
       width: 1.25rem;
@@ -60,12 +52,10 @@
       background-size: 1.25rem;
       transition: transform .2s ease-in-out;
   }
-
   .accordion-body{
     padding-left: 30px;
     white-space: break-spaces;
   }
-
   .handler{
     color: #5f0a87;
     background-color: #f2F2F2;
