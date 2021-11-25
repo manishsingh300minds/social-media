@@ -2,7 +2,7 @@
     <div class="container">
       <div class="card">
         <div class="card-body">
-          <section id="info-utile" class="bg-white py-5">
+          <section id="info" class="bg-white py-5">
             <div class="container">
                 <h3 class="text-center text-uppercase mb-5 lead-h-text main-title">Look at some amazing <span class="">posts!!</span></h3>
                   <div class="accordion" id="accordionExample">
@@ -16,7 +16,14 @@
                             </div>
                           </h2>
                         <div [id]="'post'+i" class="accordion-collapse collapse" [ngClass]="{ 'show': i == 0 }" [attr.aria-labelledby]="'heading'+i" data-bs-parent="#accordionExample">
-                          <div class="accordion-body">{{post.description}}</div>
+                          <div class="accordion-body">
+                                <div class="accordion-content">
+                                    {{post.description}}
+                                </div>
+                              <div class="img-container">
+                                  <img class="img-fluid" src="assets/images/squid.jpg" alt="squid" />
+                              </div>
+                          </div>
                         </div>
                       </div>
                   </div>
@@ -26,4 +33,3 @@
       </div>
     </div>
   </div>
-  

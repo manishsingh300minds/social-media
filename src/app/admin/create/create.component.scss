@@ -30,4 +30,20 @@
     background-color: #eee;
     border-color: #333;
   }
+  .fa-plus{
+    margin-right: 5px;
+  }
+  .add-button:hover .fa{
+    color: #fff;
+  }
+  input[type="file"]{
+    visibility: hidden;
+    width: 0px;
+  }
+  .image-preview{
+    height: 8rem;
+  }
+  .image-preview img{
+    height: 100%;
+  }
 }

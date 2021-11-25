@@ -17,7 +17,7 @@ router.post("",(req, res) => {
   postData.save().then(addedPost => {
     console.log('added data',addedPost);
     res.status(201).json({
-      mssg: "Added the new post successfully",
+      msg: "Added the new post successfully",
       postId: addedPost._id
     });
   });
@@ -34,7 +34,7 @@ router.put("/:id",(req,res) => {
   Post.updateOne({_id : req.params.id},editedPost).then(result => {
     console.log('On update', result)
     res.status(200).json({
-      mssg : 'Update successful'
+      msg : 'Update successful'
     });
   });
 })
@@ -44,7 +44,7 @@ router.delete("/:id",(req ,res) => {
   .then(result => {
     // console.log("Deleted result:",result);
     res.status(200).json({
-      mssg: "Post has been deleted"
+      msg: "Post has been deleted"
     })
   });
 })

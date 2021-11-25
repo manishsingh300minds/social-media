@@ -13,6 +13,7 @@ export class PublicComponent implements OnInit {
   postData: PostType[] = [];
 
   constructor(private postService: PostsService, public router : Router) {
+
   }
 
   ngOnInit(): void {
@@ -22,7 +23,6 @@ export class PublicComponent implements OnInit {
   getPosts(){
     this.postService.getPosts().subscribe((posts:any) => {
       this.postData = posts;
-      console.log("Post Data",this.postData)
     });
   }
 }

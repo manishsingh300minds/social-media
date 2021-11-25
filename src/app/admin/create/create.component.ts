@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Subject} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
 import {NgbAlert} from '@ng-bootstrap/ng-bootstrap';
+import {mimeType} from "./mime-type.validator";
 
 @Component({
   selector: 'create',
@@ -23,6 +24,8 @@ export class CreateComponent implements OnInit {
   editPostId : any;
   cardTitle = '';
   submitText = '';
+  imagePreview: any = null;
+
 
   constructor(private postService : PostsService, public route : ActivatedRoute, public router: Router) {}
 
@@ -30,16 +33,16 @@ export class CreateComponent implements OnInit {
     this._success.subscribe(message => this.alertMessage = message);
 
     this.postForm = new FormGroup({
-      title : new FormControl(null,{
+      'title' : new FormControl(null,{
         validators : [Validators.required]
       }),
-      description : new FormControl(null,{
+      'description' : new FormControl(null,{
         validators : [Validators.required]
       }),
-      // image : new FormControl(null,{
-      //   validators : [Validators.required],
-      //   asyncValidators : [mimeType]
-      // }),
+      'image' : new FormControl(null,{
+        validators : [Validators.required],
+        asyncValidators : [mimeType]
+      }),
     });
 
     this.route.paramMap.subscribe((param) => {
@@ -66,7 +69,7 @@ export class CreateComponent implements OnInit {
     const newPost = this.postForm.value;
     if(this.mode === 'create'){
       this.postService.addPost(newPost).subscribe((res)=>{
-        this._success.next(res.mssg);
+        this._success.next(res.msg);
         this._success.pipe(debounceTime(5000)).subscribe(() => {
             if (this.selfClosingAlert)
               this.selfClosingAlert.close();
@@ -78,7 +81,7 @@ export class CreateComponent implements OnInit {
     else{
       this.postService.updatePost(this.editPostId,newPost.title,newPost.description).subscribe((res) => {
         console.log("Update response from server",res);
-        this._success.next(res.mssg);
+        this._success.next(res.msg);
         this._success.pipe(debounceTime(5000)).subscribe(() => {
             if (this.selfClosingAlert)
               this.selfClosingAlert.close();
@@ -87,5 +90,19 @@ export class CreateComponent implements OnInit {
       },
         (error : any) => console.log("Updating server error:",error));
     }
+  }
+
+  onImage(event : Event){
+    const target= event.target as HTMLInputElement;
+    const file: File = (target.files as FileList)[0];
+    console.log('On image',file);
+    this.postForm.patchValue({image: file});
+    this.postForm.get('image')?.updateValueAndValidity();
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imagePreview = reader.result;
+    }
+    reader.readAsDataURL(file)
   }
 }
