@@ -3,7 +3,6 @@ const app = express();
 const postsRoutes = require('./routes/posts')
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-
 mongoose.connect("mongodb+srv://candle:rrjNshtDjPAPBkH1@cluster0.7n4kx.mongodb.net/postDatabase?retryWrites=true&w=majority")
   .then(() => {
     console.log('Connected to database');
@@ -13,7 +12,8 @@ mongoose.connect("mongodb+srv://candle:rrjNshtDjPAPBkH1@cluster0.7n4kx.mongodb.n
   });
 
 app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({extended: true, limit: '50mb'}));
+
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -28,6 +28,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/listing",postsRoutes)
+app.use("",postsRoutes)
 
 module.exports = app;

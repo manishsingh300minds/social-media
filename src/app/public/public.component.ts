@@ -9,13 +9,9 @@ import {PostType} from "../models/post.model";
   styleUrls: ['./public.component.scss']
 })
 export class PublicComponent implements OnInit {
-
   postData: PostType[] = [];
 
-  constructor(private postService: PostsService, public router : Router) {
-
-  }
-
+  constructor(private postService: PostsService, public router : Router) {}
   ngOnInit(): void {
     this.getPosts();
   }

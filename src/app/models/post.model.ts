@@ -1,4 +1,5 @@
 export interface PostType{
     title? : string,
-    description? : string
+    description? : string,
+    image?: File
 }

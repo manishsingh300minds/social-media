@@ -80,7 +80,6 @@ export class CreateComponent implements OnInit {
     }
     else{
       this.postService.updatePost(this.editPostId,newPost.title,newPost.description).subscribe((res) => {
-        console.log("Update response from server",res);
         this._success.next(res.msg);
         this._success.pipe(debounceTime(5000)).subscribe(() => {
             if (this.selfClosingAlert)
@@ -95,10 +94,8 @@ export class CreateComponent implements OnInit {
   onImage(event : Event){
     const target= event.target as HTMLInputElement;
     const file: File = (target.files as FileList)[0];
-    console.log('On image',file);
     this.postForm.patchValue({image: file});
     this.postForm.get('image')?.updateValueAndValidity();
-
     const reader = new FileReader();
     reader.onload = () => {
       this.imagePreview = reader.result;

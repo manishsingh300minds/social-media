@@ -13,7 +13,7 @@ export class PostsService {
   constructor(private http: HttpClient) {}
 
   getPosts() : Observable<PostType[]>{
-    return this.http.get<any[]>(this.api).pipe(map((postData : any) => {
+    return this.http.get<any[]>(this.api+'/listing').pipe(map((postData : any) => {
       return postData.map((post : any) => {
         return {
           title : post.title,
@@ -26,12 +26,11 @@ export class PostsService {
     }
 
     addPost(data : any) : Observable<any> {
-      console.log('in service',data);
-        return this.http.post<Task>(this.api,data,{
-              headers : new HttpHeaders({
-              'Content-Type' : 'application/json'
-            })
-        }).pipe(catchError(this.handleError));
+      const postData = new FormData();
+      postData.append("title",data.title);
+      postData.append("description",data.description);
+      postData.append("image",data.image,data.image.name);
+        return this.http.post<Task>(this.api+'create',postData).pipe(catchError(this.handleError));
     }
 
     updatePost(id: string,title : string, description : string){
@@ -40,11 +39,11 @@ export class PostsService {
         title : title,
         description : description
       }
-       return this.http.put(`${this.api}/${id}` ,post).pipe(catchError(this.handleError));
+       return this.http.put(`${this.api}/create/${id}` ,post).pipe(catchError(this.handleError));
     }
 
     deletePost(id : string) : Observable<any>{
-      return this.http.delete<void>(`${this.api}/${id}`).pipe(catchError(this.handleError));
+      return this.http.delete<void>(`${this.api}/listing/${id}`).pipe(catchError(this.handleError));
     }
 
     private handleError(errorResponse : HttpErrorResponse): Observable<any>{
