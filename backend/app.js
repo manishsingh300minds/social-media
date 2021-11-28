@@ -3,6 +3,8 @@ const app = express();
 const postsRoutes = require('./routes/posts')
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const path = require('path');
+
 mongoose.connect("mongodb+srv://candle:rrjNshtDjPAPBkH1@cluster0.7n4kx.mongodb.net/postDatabase?retryWrites=true&w=majority")
   .then(() => {
     console.log('Connected to database');
@@ -13,7 +15,7 @@ mongoose.connect("mongodb+srv://candle:rrjNshtDjPAPBkH1@cluster0.7n4kx.mongodb.n
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true, limit: '50mb'}));
-
+app.use("/images",express.static(path.join("backend/images")));   // any url with static /image path is allowed
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");

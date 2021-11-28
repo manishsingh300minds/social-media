@@ -1,75 +1,87 @@
-.listing-component{
-  .main-title{
+.listing-component {
+  .main-title {
     color: #a4508b;
-    span{
+
+    span {
       color: #5f0a87;
     }
   }
-  .bg-white
-  {
-      background-color:#ffffff;
+
+  .bg-white {
+    background-color: #ffffff;
   }
-  .bg-primary
-  {
-      background-color: #5f0a87!important;
+
+  .bg-primary {
+    background-color: #5f0a87 !important;
   }
+
   .accordion-item {
-      background-color: #fff;
-      border: none;
+    background-color: #fff;
+    border: none;
   }
+
   .accordion-button {
-      background-color: #f2F2F2;
-      box-shadow: none;
-      border:none;
-      padding: 20px 20px;
-      width: 90%;
+    background-color: #f2F2F2;
+    box-shadow: none;
+    border: none;
+    padding: 20px 20px;
+    width: 90%;
   }
-  .accordion-button:not(.collapsed)
-  {
-      color: #5f0a87;
-      font-weight: bold;
-      background-color: #f2F2F2;
+
+  .accordion-button:not(.collapsed) {
+    color: #5f0a87;
+    font-weight: bold;
+    background-color: #f2F2F2;
   }
 
   .accordion-button:focus {
-      z-index: 3;
-      border-color: transparent;
-      outline: 0;
-      box-shadow: none;
+    z-index: 3;
+    border-color: transparent;
+    outline: 0;
+    box-shadow: none;
   }
+
   .accordion-button:not(.collapsed)::after {
-      background-image: url("https://nsm09.casimages.com/img/2021/06/17//21061710471725998217466601.png");
-      transform: rotate(-180deg);
+    background-image: url("https://nsm09.casimages.com/img/2021/06/17//21061710471725998217466601.png");
+    transform: rotate(-180deg);
   }
+
   .accordion-button::after {
-      flex-shrink: 0;
-      width: 1.25rem;
-      height: 1.25rem;
-      margin-left: auto;
-      content: "";
-      background-image: url("https://nsm09.casimages.com/img/2021/06/17//21061710471725998217466600.png");
-      background-repeat: no-repeat;
-      background-size: 1.25rem;
-      transition: transform .2s ease-in-out;
+    flex-shrink: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-left: auto;
+    content: "";
+    background-image: url("https://nsm09.casimages.com/img/2021/06/17//21061710471725998217466600.png");
+    background-repeat: no-repeat;
+    background-size: 1.25rem;
+    transition: transform .2s ease-in-out;
   }
-  .accordion-body{
+
+  .accordion-body {
     padding-left: 30px;
     white-space: break-spaces;
     display: flex;
     justify-content: space-between;
-    .accordion-content{
+
+    .accordion-content {
       width: 60%;
       padding-right: 10px;
     }
-    .img-container{
-      height: 300px;
-      img{
+
+    .img-container {
+      height: 280px;
+      width: 300px;
+
+      img {
         width: 100%;
         height: 100%;
+        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
       }
     }
   }
-  .handler{
+
+  .handler {
     color: #5f0a87;
     background-color: #f2F2F2;
     box-shadow: none;
@@ -78,7 +90,8 @@
     justify-content: start;
     align-items: center;
     width: 10%;
-    .icon{
+
+    .icon {
       font-size: 20px;
       display: flex;
       margin-right: 20px;
@@ -87,10 +100,12 @@
       text-decoration: none;
     }
   }
-  #wrapper{
+
+  #wrapper {
     width: auto;
   }
-  .show{
+
+  .show {
     border-top: 4px solid #a4508b !important;
   }
 }
