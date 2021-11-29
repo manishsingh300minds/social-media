@@ -26,11 +26,9 @@
           </div>
           <div class="mt-3">
             <button type="button" class="btn btn-light btn-outline-dark add-button" (click)="imagePicker.click()"><i
-                class="fa fa-plus"></i>Add image</button>
-            {{post.image}}
+                class="fa fa-plus"></i>{{mode === 'edit' ? 'Update Image' : 'Add Image'}}</button>
             <input #imagePicker type="file" aria-hidden="true" (change)="onImage($event)" />
           </div>
-          <span *ngIf="postForm.get('image')?.invalid">{{postForm.get('image')?.invalid}} Choose image please</span>
           <div class="image-preview mt-3"
             *ngIf="imagePreview !== '' && imagePreview !== null && postForm.get('image')?.valid">
             <img [src]="imagePreview" [alt]="postForm.value.title" accept="image/*" />

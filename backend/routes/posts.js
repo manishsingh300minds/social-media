@@ -14,16 +14,13 @@ const storage = multer.diskStorage({
     const isValid = MIME_TYPE_MAP[file.mimetype];
     let error= new Error('invalid mime type');
     if(isValid){
-      console.log("Image type is valid")
       error = null;
     }
-    console.log('File error:',error);
     callBack(error, "backend/images");
   },
   filename: (req, file, callBack) => {
     const name = file.originalname.toLocaleLowerCase().split(' ').join('-');
     const ext = MIME_TYPE_MAP[file.mimetype];
-    console.log("filename",name);
     callBack(null, name + '-' + Date.now() + '.' + ext);
   }
 });
@@ -37,15 +34,13 @@ router.get("/listing",(req, res) => {
 
 router.post("/create", multer({storage: storage}).single('image'), (req, res) => {
   // protocol http / https ---> :// for full url
-  const url =req.protocol + '://' + req.get("host");
-  console.log(req.body)
+  const url = req.protocol + '://' + req.get("host");
   const postData = new Post({
     title : req.body.title,
     description : req.body.description,
     image: url + "/images/" + req.file.filename
   });
   postData.save().then(addedPost => {
-    console.log('added data',addedPost);
     res.status(201).json({
       msg: "Added the new post successfully",
       post: {
@@ -57,18 +52,18 @@ router.post("/create", multer({storage: storage}).single('image'), (req, res) =>
 })
 
 router.put("/create/:id",  multer({storage: storage}).single('image'),(req,res) => {
-
-  console.log("file",req.file);
-
+  let imagePath = req.body.image;
+  if(req.file){
+    const url = req.protocol + '://' + req.get("host");
+    imagePath = url + "/images/" + req.file.filename
+  }
   const editedPost = new Post({
     _id : req.params.id,
     title : req.body.title,
     description : req.body.description,
+    image : imagePath
   });
-  console.log('Received =>',req.params.id,'\nPost =>',editedPost);
-
   Post.updateOne({_id : req.params.id},editedPost).then(result => {
-    console.log('On update', result)
     res.status(200).json({
       msg : 'Update successful'
     });
@@ -78,7 +73,6 @@ router.put("/create/:id",  multer({storage: storage}).single('image'),(req,res) 
 router.delete("/listing/:id",(req ,res) => {
   Post.deleteOne({_id: req.params.id})
   .then(result => {
-    // console.log("Deleted result:",result);
     res.status(200).json({
       msg: "Post has been deleted"
     })

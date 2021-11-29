@@ -23,7 +23,6 @@ export class ListingComponent implements OnInit {
   getPosts() {
     this.postService.getPosts().subscribe((posts: any) => {
       this.postData = posts;
-      console.log('res', this.postData);
     });
   }
 

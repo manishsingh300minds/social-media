@@ -26,13 +26,10 @@ export class HeaderComponent implements OnInit {
     const elementId: string = (event.target as Element).id;
     const element = document.getElementById(elementId);
     const previousElement = document.getElementById(this.previousId);
-
     if(previousElement)
       previousElement.classList.remove('active');
-
     if(element)
       element.classList.add('active');
-
     this.previousId = elementId;
   }
 
@@ -46,13 +43,8 @@ export class HeaderComponent implements OnInit {
   }
 
   logout(){
-    this.msalService.logout().subscribe(res => {
-      this.router.navigate(['public']);
+    this.msalService.logoutPopup({
+      mainWindowRedirectUri: "/"
     });
   }
 }
-
-/*
-https://login.microsoftonline.com/common/oauth2/v2.0/logout?post_logout_redirect_uri=http%3A%2F%2Flocalhost%3A4200%2Flisting&client-request-id=53c34968-b84a-4133-b3b6-a41ed3cf2506
-https://login.microsoftonline.com/common/oauth2/v2.0/logoutsession
- */

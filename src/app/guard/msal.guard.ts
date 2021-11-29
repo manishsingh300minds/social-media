@@ -7,7 +7,6 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class MsalGuard implements CanActivate {
-
   constructor(private msalService : MsalService ){}
 
   canActivate(

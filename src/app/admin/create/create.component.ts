@@ -1,12 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PostsService } from '../../services/posts.service';
 import { ActivatedRoute, Router } from "@angular/router";
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
 import { mimeType } from "./mime-type.validator";
-import { PostType } from 'src/app/models/post.model';
 
 @Component({
   selector: 'create',
@@ -26,7 +25,7 @@ export class CreateComponent implements OnInit {
   cardTitle = '';
   submitText = '';
   imagePreview: any = null;
-
+  imagePath: string | null = '';
 
   constructor(private postService: PostsService, public route: ActivatedRoute, public router: Router) { }
 
@@ -42,14 +41,11 @@ export class CreateComponent implements OnInit {
       }),
       'image': new FormControl(null, {
         validators: [Validators.required],
-        // asyncValidators: [mimeType]
+        asyncValidators: [mimeType]
       }),
     });
 
-    this.getFormValidationErrors();
-
     this.route.paramMap.subscribe((param) => {
-      console.log('params', param)
       if (param.has('title')) {
         this.post = {
           id: param.get('id'),
@@ -57,19 +53,19 @@ export class CreateComponent implements OnInit {
           description: param.get('description'),
           image: param.get('image')
         }
+        this.postForm.get('image')?.clearValidators();
+        // this.getFormValidationErrors();
         this.editPostId = param.get('id');
         this.mode = 'edit';
         this.cardTitle = 'Update your Post!!'
         this.submitText = 'Update Post';
-        console.log("During edit", this.post);
-        console.log('Edit postForm', this.postForm);
+        this.imagePath = param.get('image');
       }
       else {
         this.post = {};
         this.mode = 'create';
         this.cardTitle = 'Add a new Post!!'
         this.submitText = 'Add Post';
-        console.log('postForm', this.postForm);
       }
     });
   }
@@ -89,30 +85,29 @@ export class CreateComponent implements OnInit {
     const newPost = this.postForm.value;
     if (this.mode === 'create') {
       this.postService.addPost(newPost).subscribe((res) => {
-        console.log('post received', res);
         this._success.next(res.msg);
         this._success.pipe(debounceTime(5000)).subscribe(() => {
           if (this.selfClosingAlert)
             this.selfClosingAlert.close();
         });
-        const post: PostType = {
-          id: res.post.id,
-          title: this.postForm.value.title,
-          description: this.postForm.value.description,
-          image: res.post.image
-        }
         this.postForm.reset();
       },
         (error: any) => console.log("Server error:", error));
     }
     else {
-      this.postService.updatePost(this.editPostId, newPost.title, newPost.description, this.postForm.value.image).subscribe((res) => {
-        this._success.next(res.msg);
-        this._success.pipe(debounceTime(5000)).subscribe(() => {
-          if (this.selfClosingAlert)
-            this.selfClosingAlert.close();
-        });
+      if(this.postForm.value.image == null){
+        this.postForm.value.image = this.imagePath
+      }
+      else{
+        this.imagePath = this.postForm.value.image
+      }
+      this.postService.updatePost(this.editPostId, newPost.title, newPost.description, this.imagePath).subscribe((res) => {
         this.router.navigate(['create']);
+            this._success.next(res.msg);
+            this._success.pipe(debounceTime(5000)).subscribe(() => {
+              if (this.selfClosingAlert)
+                this.selfClosingAlert.close();
+        });
       },
         (error: any) => console.log("Updating server error:", error));
     }

@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { PostType } from '../models/post.model';
-import { Form } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -35,15 +34,17 @@ export class PostsService {
     return this.http.post<Task>(this.api + 'create', postData).pipe(catchError(this.handleError));
   }
 
-  updatePost(id: string, title: string, description: string, image: File | string) {
+  updatePost(id: string, title: string, description: string, image: File | string | null) {
     let postData: PostType | FormData;
-    if (typeof (image) === 'object') {
+    if (typeof (image) === 'object' && image) {
       postData = new FormData();
+      postData.append("id", id);
       postData.append("title", title);
       postData.append("description", description);
       postData.append("image", image, image.name);
     }
     else {
+      if(image)
       postData = {
         id: id,
         title: title,
@@ -51,6 +52,7 @@ export class PostsService {
         image: image
       }
     }
+    // @ts-ignore
     return this.http.put(`${this.api}/create/${id}`, postData).pipe(catchError(this.handleError));
   }
 
