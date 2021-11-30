@@ -13,6 +13,8 @@ import { PostsService } from './services/posts.service';
 import { MsalGuard } from './guard/msal.guard';
 import { MsalModule, MsalService, MSAL_INSTANCE } from '@azure/msal-angular';
 import { IPublicClientApplication, PublicClientApplication } from '@azure/msal-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatPaginatorModule} from "@angular/material/paginator";
 
 export function MSALInstanceFactory() : IPublicClientApplication {
   return new PublicClientApplication({
@@ -37,7 +39,9 @@ export function MSALInstanceFactory() : IPublicClientApplication {
     ReactiveFormsModule,
     MsalModule,
     FormsModule,
-    NgbModule
+    NgbModule,
+    BrowserAnimationsModule,
+    MatPaginatorModule
   ],
   providers: [
     PostsService,

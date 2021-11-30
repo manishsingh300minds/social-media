@@ -10,6 +10,7 @@ import { ListingComponent } from "./listing/listing.component";
 import { CreateComponent } from "./create/create.component";
 
 import { routes } from "./admin-routing";
+import {MatPaginatorModule} from "@angular/material/paginator";
 
 @NgModule({
     declarations: [
@@ -23,7 +24,8 @@ import { routes } from "./admin-routing";
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
-        NgbAlertModule
+        NgbAlertModule,
+        MatPaginatorModule
     ],
     bootstrap: [AdminComponent]
 })

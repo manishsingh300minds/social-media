@@ -1,12 +1,12 @@
 <div class="listing-component">
-  <div class="container">
+  <div class="container pb-4 pt-4">
     <div class="card">
       <div class="card-body">
-        <section id="info" class="bg-white py-5">
+        <section id="info" class="bg-white pt-4">
           <div class="container">
-            <h3 class="text-center text-uppercase mb-5 lead-h-text main-title">Look at some amazing <span
-                class="">posts!!</span></h3>
-            <div class="accordion" id="accordionExample">
+            <div class="mat-display-1 text-center text-uppercase mb-5 lead-h-text main-title">Look at some amazing <span
+                class="">posts!!</span></div>
+            <div  id="accordionExample" class="accordion">
               <div class="accordion-item" *ngFor="let post of postData; let i = index">
                 <h2 class="accordion-header  container-fluid" [id]="'heading'+i">
                   <div id="wrapper" class="row">
@@ -37,6 +37,9 @@
                   </div>
                 </div>
               </div>
+            </div>
+            <div class="mt-3">
+              <mat-paginator [length]="totalPosts" [pageSizeOptions]="pageSizeOptions" [pageSize]="postsPerPage" (page)="onChangePage($event)"></mat-paginator>
             </div>
           </div>
         </section>

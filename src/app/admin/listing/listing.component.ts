@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PostsService } from '../../services/posts.service';
 import { Router } from "@angular/router";
 import { PostType } from "../../models/post.model";
+import {PageEvent} from "@angular/material/paginator";
 
 @Component({
   selector: 'listing',
@@ -13,6 +14,9 @@ export class ListingComponent implements OnInit {
   postData: PostType[] = [];
   expand = false;
   previousId = 0;
+  totalPosts = 10;
+  postsPerPage = 5;
+  pageSizeOptions = [2,5,10,20];
 
   constructor(private postService: PostsService, public router: Router) { }
 
@@ -35,5 +39,9 @@ export class ListingComponent implements OnInit {
       (err) => console.log("Error: ", err)
     );
     this.postData = this.postData.filter(data => data !== post);
+  }
+
+  onChangePage(event : PageEvent){
+    console.log('event',event);
   }
 }
