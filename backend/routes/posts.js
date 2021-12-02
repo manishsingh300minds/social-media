@@ -26,10 +26,27 @@ const storage = multer.diskStorage({
 });
 
 router.get("/listing",(req, res) => {
+  const pageSize = +req.query.pagesize;
+  const currentPage = +req.query.page;
+  console.log(req.query);
+  const postQuery = Post.find();
+  let fetchedPost;
+  if(pageSize && currentPage){
+    postQuery
+        .skip(pageSize * (currentPage-1))
+        .limit(pageSize)
+  }
   // then() can be use to get the data received from frontend
-  Post.find().then((documents) => {
-    res.status(200).json(documents);
-  });
+  postQuery.then((documents) => {
+    fetchedPost = documents;
+    return Post.count();
+  }).then(count => {
+    res.status(200).json({
+      msg : "Posts fetched successfully",
+      posts : fetchedPost,
+      maxPosts: count
+    })
+  })
 });
 
 router.post("/create", multer({storage: storage}).single('image'), (req, res) => {

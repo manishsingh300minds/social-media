@@ -11,21 +11,27 @@ import { PageEvent } from '@angular/material/paginator';
 })
 export class PublicComponent implements OnInit {
   postData: PostType[] = [];
-  totalPosts = 10;
+  expand = false;
+  totalPosts = 0;
   postsPerPage = 5;
+  currentPage = 1;
   pageSizeOptions = [2,5,10,20];
+
   constructor(private postService: PostsService, public router : Router) {}
   ngOnInit(): void {
-    this.getPosts();
+    this.getPosts(this.postsPerPage,this.currentPage);
   }
 
-  getPosts(){
-    this.postService.getPosts().subscribe((posts:any) => {
-      this.postData = posts;
+  getPosts(postsPerPage : number,currentPage: number) {
+    this.postService.getPosts(postsPerPage,currentPage).subscribe((postsData) => {
+      this.postData = postsData.posts;
+      this.totalPosts = postsData.maxPosts;
     });
   }
 
   onChangePage(event : PageEvent){
-    console.log(event);
+    this.currentPage = event.pageIndex+1;
+    this.postsPerPage = event.pageSize;
+    this.getPosts(this.postsPerPage,this.currentPage);
   }
 }

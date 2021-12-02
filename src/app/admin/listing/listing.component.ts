@@ -13,27 +13,27 @@ export class ListingComponent implements OnInit {
 
   postData: PostType[] = [];
   expand = false;
-  previousId = 0;
-  totalPosts = 10;
+  totalPosts = 0;
   postsPerPage = 5;
+  currentPage = 1;
   pageSizeOptions = [2,5,10,20];
-
   constructor(private postService: PostsService, public router: Router) { }
 
   ngOnInit(): void {
-    this.getPosts();
+    this.getPosts(this.postsPerPage,this.currentPage);
   }
 
-  getPosts() {
-    this.postService.getPosts().subscribe((posts: any) => {
-      this.postData = posts;
+  getPosts(postsPerPage : number,currentPage: number) {
+    this.postService.getPosts(postsPerPage,currentPage).subscribe((postsData) => {
+      this.postData = postsData.posts;
+      this.totalPosts = postsData.maxPosts;
     });
   }
 
   deletePost(post: any) {
     const postId = post.id;
-    this.postService.deletePost(postId).subscribe(
-      () => {
+    this.postService.deletePost(postId).subscribe(() => {
+        this.getPosts(this.postsPerPage,this.currentPage);
         alert(post.title + 'post has been deleted')
       },
       (err) => console.log("Error: ", err)
@@ -42,6 +42,8 @@ export class ListingComponent implements OnInit {
   }
 
   onChangePage(event : PageEvent){
-    console.log('event',event);
+    this.currentPage = event.pageIndex+1;
+    this.postsPerPage = event.pageSize;
+    this.getPosts(this.postsPerPage,this.currentPage);
   }
 }

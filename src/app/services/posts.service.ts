@@ -12,16 +12,20 @@ export class PostsService {
   api = environment.serverUrl;
   constructor(private http: HttpClient) { }
 
-  getPosts(): Observable<PostType[]> {
-    return this.http.get<any[]>(this.api + '/listing').pipe(map((postData: any) => {
-      return postData.map((post: any) => {
-        return {
-          title: post.title,
-          description: post.description,
-          id: post._id,
-          image: post.image
-        }
-      })
+  getPosts(postsPerPage: number, currentPage : number): Observable<any> {
+    const queryParams = `?pagesize=${postsPerPage}&page=${currentPage}`;
+    return this.http.get<any>(this.api + '/listing'+queryParams).pipe(map((postData: any) => {
+      return  {
+        posts: postData.posts.map((post: any) => {
+          return {
+            title: post.title,
+            description: post.description,
+            id: post._id,
+            image: post.image
+          }
+        }),
+        maxPosts : postData.maxPosts
+      }
     }),
       catchError(this.handleError));
   }
